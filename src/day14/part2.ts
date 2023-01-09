@@ -99,16 +99,16 @@ class SandDrop {
     let pos = this.#getNextPosition(fromPosition)
     let prevPos = fromPosition
 
-    while (!this.#isOutOfGrid(pos) && prevPos !== pos) {
+    while (!this.#hasReachedFloor(pos) && prevPos !== pos) {
       prevPos = pos
       pos = this.#getNextPosition(pos)
-      console.log(prevPos, pos)
     }
 
-    if (this.#isOutOfGrid(pos)) {
+    console.log(prevPos, pos)
+    this.#grid.add(pos)
+    if (pos === fromPosition) {
       return true
     } else {
-      this.#grid.add(pos)
       return false
     }
   }
@@ -140,17 +140,23 @@ class SandDrop {
     return `${x},${y}`
   }
 
-  #isOutOfGrid(pos: Position): boolean {
+  // #isOutOfGrid(pos: Position): boolean {
+  //   const [x, y] = this.#convertPosToTupple(pos)
+  //
+  //   return x < this.#minX || x > this.#maxX || y > this.#maxY + 1
+  // }
+
+  #hasReachedFloor(pos: Position): boolean {
     const [x, y] = this.#convertPosToTupple(pos)
 
-    return x < this.#minX || x > this.#maxX || y > this.#maxY
+    return y > this.#maxY
   }
 }
 
 function main(input: string) {
   const sandDrop = new SandDrop(input)
-  sandDrop.printGrid()
   const count = sandDrop.startSandDrop('500,0')
+  sandDrop.printGrid()
   console.log('count', count)
 }
 

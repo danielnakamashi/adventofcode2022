@@ -7,11 +7,11 @@ async function main() {
   let max = 0
   const rl = readline.createInterface({
     input: fs.createReadStream(path.join(__dirname, 'input.txt')),
-    crlfDelay: Infinity
+    crlfDelay: Infinity,
   })
 
   let current = 0
-  rl.on('line', (line) => {
+  rl.on('line', line => {
     if (line.length === 0) {
       max = Math.max(max, current)
       current = 0
@@ -27,8 +27,10 @@ async function main() {
 }
 
 main()
-console.log('memory', Math.round(process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100)
-
+console.log(
+  'memory',
+  Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100
+)
 
 // const input = fs.readFileSync(path.join(__dirname, './input.txt'), { encoding: 'utf-8' })
 // const elfCalories = input.split('\n\n')
